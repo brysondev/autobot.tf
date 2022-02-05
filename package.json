@@ -15,11 +15,8 @@
     "express-device": "^0.4.2",
     "jimp": "^0.16.1",
     "merge-images": "^2.0.0",
-    "reconnecting-websocket": "^4.4.0",
-    "request-retry-dayjs": "^1.1.0",
     "winston": "^3.4.0",
-    "winston-daily-rotate-file": "^4.5.5",
-    "ws": "^8.4.2"
+    "winston-daily-rotate-file": "^4.5.5"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
