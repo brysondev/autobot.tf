@@ -97,7 +97,7 @@ function generateBptfUrl(schema, item) {
 
     return (
         base +
-        `${quality}/${itemName}/${tradable}/${craftable}${
+        `${quality}/${encodeURIComponent(itemName)}/${tradable}/${craftable}${
             priceindex ? '/' + priceindex : ''
         }`
     );

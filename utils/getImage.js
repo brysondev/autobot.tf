@@ -1855,7 +1855,7 @@ async function getImage(schema, item, itemName, baseItemData, domain) {
     // TODO: Later just get the effect image and make it overlays instead of merge thingy (hmmm...)
     if (item.effect !== null) {
         const folderContents = fs.readdirSync(
-            path.join(__dirname, '../public/assets/image/items/')
+            path.join(__dirname, '../public/images/items/')
         );
 
         let fileFound = false;
@@ -1879,7 +1879,7 @@ async function getImage(schema, item, itemName, baseItemData, domain) {
             if (sku === file.replace('.png', '')) {
                 log.default.debug(`File found!`);
                 fileFound = true;
-                toReturn = `${domain}/assets/image/items/${file}`;
+                toReturn = `${domain}/images/items/${file}`;
             }
         });
 
@@ -1902,13 +1902,13 @@ async function getImage(schema, item, itemName, baseItemData, domain) {
                 fs.writeFileSync(
                     path.join(
                         __dirname,
-                        `../public/assets/image/items/${sku}.png`
+                        `../public/images/items/${sku}.png`
                     ),
                     toSave,
                     'base64'
                 );
 
-                return `${domain}/assets/image/items/${sku}.png`;
+                return `${domain}/images/items/${sku}.png`;
             } catch (err) {
                 // Caught an error, return default image
                 log.default.error(err);
@@ -1952,7 +1952,7 @@ async function mergeImage(itemImage, effectId) {
             [
                 path.join(
                     __dirname,
-                    `../public/assets/image/effects/${effectId}_380x380.png`
+                    `../public/images/effects/${effectId}_380x380.png`
                 ),
                 itemImage,
             ],

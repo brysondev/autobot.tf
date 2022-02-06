@@ -1,5 +1,6 @@
 node_modules
 .env
 public/files/*.json
-public/assets/image/items/*.png
+public/images/items/*.png
+public/images/effects/*.png
 logs
