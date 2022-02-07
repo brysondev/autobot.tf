@@ -1,11 +1,11 @@
 {
   "name": "autobot.tf",
-  "version": "2.7.0",
+  "version": "2.7.5",
   "description": "Official TF2Autobot website",
   "main": "index.js",
   "dependencies": {
     "@tf2autobot/tf2-currencies": "^2.0.1",
-    "@tf2autobot/tf2-schema": "^2.3.1",
+    "@tf2autobot/tf2-schema": "^2.3.3",
     "@tf2autobot/tf2-sku": "^2.0.3",
     "canvas": "^2.8.0",
     "death": "^1.1.0",

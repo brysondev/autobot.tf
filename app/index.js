@@ -75,7 +75,7 @@ init().then((schemaManager) => {
 
         const sku = req.params.sku;
         const item = SKU.fromString(sku);
-        const isExist = schemaManager.schema.checkExistance(item);
+        const isExist = schemaManager.schema.checkExistence(item);
 
         // const deviceType = req.device.type.toLowerCase();
         // const isPhone = deviceType === 'phone';

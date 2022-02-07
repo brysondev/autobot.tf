@@ -1885,33 +1885,43 @@ async function getImage(schema, item, itemName, baseItemData, domain) {
 
         if (!fileFound) {
             log.default.debug(`File not found, merging images...`);
+
             try {
-                const mergedImage = await mergeImage(
-                    needResize
-                        ? await resizeImage(itemImageUrlPrint)
-                        : itemImageUrlPrint,
-                    item.effect
+                const itemImage = needResize
+                    ? await resizeImage(itemImageUrlPrint)
+                    : itemImageUrlPrint;
+
+                const imageBase64 = await mergeImages(
+                    [
+                        path.join(
+                            __dirname,
+                            `../public/images/effects/${item.effect}_380x380.png`
+                        ),
+                        itemImage,
+                    ],
+                    {
+                        Canvas: Canvas,
+                        Image: Image,
+                    }
                 );
 
-                const toSave = mergedImage.replace(
+                const toSave = imageBase64.replace(
                     /^data:image\/png;base64,/,
                     ''
                 );
 
-                // save to cloud database?
                 fs.writeFileSync(
-                    path.join(
-                        __dirname,
-                        `../public/images/items/${sku}.png`
-                    ),
+                    path.join(__dirname, `../public/images/items/${sku}.png`),
                     toSave,
                     'base64'
                 );
 
                 return `${domain}/images/items/${sku}.png`;
             } catch (err) {
-                // Caught an error, return default image
-                log.default.error(err);
+                log.default.error(
+                    'Error on merging images: ' + JSON.stringify(err, null, 2)
+                );
+                // Caught an error, return default image, no need to save into file
                 return toReturn;
             }
         } else {
@@ -1935,39 +1945,21 @@ async function resizeImage(itemImage) {
                         return resolve(resizedBase64);
                     })
                     .catch((err) => {
-                        log.default.error(err);
+                        log.default.error(
+                            'Error on image.resize.getBase64Async (resizeImage): ' +
+                                JSON.stringify(err, null, 2)
+                        );
                         return reject(err);
                     });
             })
             .catch((err) => {
-                log.default.error(err);
+                log.default.error(
+                    'Error on Jimp.read (resizeImage): ' +
+                        JSON.stringify(err, null, 2)
+                );
                 return reject(err);
             });
     });
-}
-
-async function mergeImage(itemImage, effectId) {
-    try {
-        const imageBase64 = await mergeImages(
-            [
-                path.join(
-                    __dirname,
-                    `../public/images/effects/${effectId}_380x380.png`
-                ),
-                itemImage,
-            ],
-            {
-                Canvas: Canvas,
-                Image: Image,
-            }
-        );
-
-        return imageBase64;
-    } catch (err) {
-        log.default.error(err);
-    }
-
-    return itemImage;
 }
 
 module.exports = getImage;
